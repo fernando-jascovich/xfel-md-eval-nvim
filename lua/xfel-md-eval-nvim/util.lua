@@ -17,7 +17,6 @@ util.get_buffer = function()
   if buffer_number == -1 or not buffer_visible then
     vim.api.nvim_command("botright split md-eval-output")
     buffer_number = vim.api.nvim_get_current_buf()
-    vim.opt_local.readonly = true
     vim.api.nvim_buf_set_keymap(
       buffer_number,
       'n', 

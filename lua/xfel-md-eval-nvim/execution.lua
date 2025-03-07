@@ -11,16 +11,12 @@ end
 
 local log_clear = function()
   local buffer = util.get_buffer()
-  vim.api.nvim_buf_set_option(buffer, "readonly", false)
   vim.api.nvim_buf_set_lines(buffer, 0, -1, true, {})
-  vim.api.nvim_buf_set_option(buffer, "readonly", true)
 end
 
 local log = function(contents)
   local buffer = util.get_buffer()
-  vim.api.nvim_buf_set_option(buffer, "readonly", false)
   vim.api.nvim_buf_set_lines(buffer, -1, -1, true, contents)
-  vim.api.nvim_buf_set_option(buffer, "readonly", true)
   vim.api.nvim_buf_set_option(buffer, "modified", false)
 
   local window = vim.api.nvim_call_function("bufwinid", { buffer })
