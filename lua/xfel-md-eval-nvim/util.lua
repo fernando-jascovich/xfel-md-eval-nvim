@@ -21,7 +21,7 @@ util.get_buffer = function()
       buffer_number,
       'n', 
       'q',
-      ":q<cr>", 
+      ":q!<cr>", 
       { noremap = true }
     )
   end

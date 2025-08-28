@@ -45,16 +45,28 @@ local execution = {}
 
 execution.execute_async = function(lang, contents)
   log_clear()
-  local tempfile = vim.fn.tempname() 
+  local tempfile = vim.fn.tempname()
   vim.fn.writefile(contents, tempfile)
-  
+
   local opts = {
     on_stdout = on_async_event,
     on_stderr = on_async_event,
     on_exit = on_async_event,
-    stdin = 'pipe'
+    stdin = 'null',
+    pty = false
   }
   local job = vim.fn.jobstart(cmd(lang, tempfile), opts)
+
+  vim.api.nvim_set_option_value("filetype", lang, {
+    scope = "local",
+    buf = util.get_buffer()
+  })
+
+  vim.api.nvim_buf_attach(util.get_buffer(), false, {
+    on_detach = function()
+      vim.fn.jobstop(job)
+    end
+  })
 
   tempfiles[job] = tempfile
 end
